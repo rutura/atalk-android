@@ -14,10 +14,10 @@ apply plugin: 'org.anarres.jarjar' // jarjar.repackage tool
 
 repositories {
     jcenter()
-//    maven {
-//        // SNAPSHOT repository - need manual cleanup for new SNAPSHOT update:
-//       url 'https://oss.sonatype.org/content/repositories/snapshots'
-//    }
+    maven {
+       // SNAPSHOT repository - need manual cleanup for new SNAPSHOT update if same name with date change only:
+       url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
     maven {
         url 'https://jitpack.io'
     }
@@ -41,8 +41,8 @@ android {
 
     defaultConfig {
         applicationId "org.atalk.android"
-        versionCode 1001
-        versionName "1.0.1" // no alphabet allowed (e.g. 0.8.7.a)
+        versionCode 1002
+        versionName "1.0.2" // no alphabet allowed (e.g. 0.8.7.a)
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.compileSdkVersion
         multiDexEnabled true
@@ -51,7 +51,6 @@ android {
     signingConfigs {
         release {
             storeFile file("${keystore}")
-            // keyAlias "atalk"
             File propsFile = file("${secure_properties}")
             if (propsFile.exists()) {
                 Properties props = new Properties()
@@ -66,7 +65,7 @@ android {
     buildTypes {
         release {
             shrinkResources false
-            minifyEnabled false
+            minifyEnabled false  // too many missing reference when enable
             // useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -114,10 +113,10 @@ android {
     }
 }
 ext {
-    // Need manual cleanup for new SNAPSHOT update:
+    // Need manual cleanup for new SNAPSHOT update if same name with date change only:
     // ~\.gradle\caches\modules-2\files-2.1\org.igniterealtime.smack
-    smackVersion = '4.2.2'
-    // smackVersion = '4.2.2-SNAPSHOT'
+    // smackVersion = '4.2.2'
+    smackVersion = '4.2.3-SNAPSHOT'
 }
 
 dependencies {
@@ -132,10 +131,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // direct import from local lib/bundles/*.jar
-    // must use local json-simple-1.1.1.jar - otherwise dependency conflict
-    // maven ice4j-2.0 not working for atalk
     implementation files('lib/bundles/dhcp4java-1.00.jar')
+    // maven ice4j-2.0 not working for atalk - unable to get candidates and call won't connect
     implementation files('lib/bundles/ice4j-1.1.jar')
+    // must use local json-simple-1.1.1.jar - otherwise dependency conflict
     implementation files('lib/bundles/json-simple-1.1.1.jar')
 
     implementation "com.android.support:support-v4:${rootProject.supportLibraryVersion}"
@@ -151,32 +150,36 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.github.yalantis:ucrop:2.2.1'
+    implementation 'com.google.guava:guava:23.6-android'
     implementation 'com.googlecode.libphonenumber:libphonenumber:7.5.1'
     // when targeting Android API 23 and newer - class obsoleted
     implementation 'cz.msebera.android:httpclient:4.4.1.2' // duplicate class
     implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
     implementation 'org.apache.commons:commons-lang3:3.6'
+
     implementation 'org.bitlet:weupnp:0.1.4'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.57'
     // (dependencies = core + prov)
     implementation 'org.jmdns:jmdns:3.5.3'
+    implementation 'org.opentelecoms.sdp:sdp-api:1.0'
 
     // local /lib/smack library manual inclusion and dependencies
-//    implementation files('lib/smack/smack-android-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-android-extensions-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-bosh-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-compression-jzlib-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-core-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-experimental-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-extensions-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-im-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-legacy-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-resolver-minidns-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-sasl-provided-4.2.2-SNAPSHOT.jar')
-//    implementation files('lib/smack/smack-tcp-4.2.2-SNAPSHOT.jar')
-    implementation files('lib/smack/smack-omemo-4.2.2-SNAPSHOT.jar')
-    implementation files('lib/smack/smack-omemo-signal-4.2.2-SNAPSHOT.jar')
-    implementation 'org.whispersystems:signal-protocol-java:2.4.0'
+//    implementation files('lib/smack/smack-android-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-android-extensions-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-bosh-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-compression-jzlib-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-core-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-experimental-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-extensions-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-im-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-legacy-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-resolver-minidns-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-sasl-provided-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-tcp-4.2.3-SNAPSHOT.jar')
+
+//    implementation files('lib/smack/smack-omemo-4.2.3-SNAPSHOT.jar')
+//    implementation files('lib/smack/smack-omemo-signal-4.2.3-SNAPSHOT.jar')
+//    implementation 'org.whispersystems:signal-protocol-java:2.6.2'
 
     // smack dependencies needed if use local libraries
 //    implementation 'org.igniterealtime.jbosh:jbosh:0.9.0'
@@ -192,8 +195,8 @@ dependencies {
     implementation "org.igniterealtime.smack:smack-sasl-provided:$smackVersion"
     implementation "org.igniterealtime.smack:smack-tcp:$smackVersion"
 
-//    implementation "org.igniterealtime.smack:smack-omemo:$smackVersion"
-//    implementation "org.igniterealtime.smack:smack-omemo-signal:$smackVersion"
+    implementation "org.igniterealtime.smack:smack-omemo:$smackVersion"
+    implementation "org.igniterealtime.smack:smack-omemo-signal:$smackVersion"
 
     // keep for reference only
     // Use jarjar.repackage in place of a dependency notation (destination file?).
@@ -205,6 +208,7 @@ dependencies {
     implementation 'org.jxmpp:jxmpp-jid:0.6.0'
     // (dependencies = jxmpp-core + jxmpp-stringprep-libidn')
 
+    implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'org.osgi:osgi.core:6.0.0'
     implementation "com.google.android.gms:play-services-location:${rootProject.gmsPlayServicesVersion}"
     implementation "com.google.android.gms:play-services-maps:${rootProject.gmsPlayServicesVersion}"
@@ -262,33 +266,6 @@ task jarRepackage(type: Copy, description: 'Repackage jar to avoid conflict') {
             zap pattern: 'javax.media.format.VideoFormat'
             zap pattern: 'javax.media.Manager'
             zap pattern: 'javax.media.Manager**'
-        }
-
-        // renaming this strings leads to Exception -
-        // ClassNotFoundException: org.atalk.gov.nist.org.atalk.javax.sip.header.HeaderFactoryImpl
-        // The cause is javax.sip.SipFactory constructing the header factories by name and
-        // renaming causes wrong classNames.
-        jarjar2(jarfile: 'libs/protocol-sip.jar') {
-            zipfileset(src: 'lib/bundles/protocol-sip.jar')
-            rule pattern: 'javax.sip.header.HeaderFactoryImpl',
-                    result: 'javax.sip.header.HeaderFactoryImpl'
-            rule pattern: 'javax.sip.message.MessageFactoryImpl',
-                    result: 'javax.sip.message.MessageFactoryImpl'
-            rule pattern: 'javax.sip.address.AddressFactoryImpl',
-                    result: 'javax.sip.address.AddressFactoryImpl'
-
-            rule pattern: 'javax.sip.**',
-                    result: 'org.atalk.javax.sip.@1'
-            rule pattern: 'gov.nist.core.**',
-                    result: 'org.atalk.gov.nist.core.@1'
-            rule pattern: 'gov.nist.javax.sdp.**',
-                    result: 'org.atalk.gov.nist.javax.sdp.@1'
-            rule pattern: 'gov.nist.javax.sip.**',
-                    result: 'org.atalk.gov.nist.javax.sip.@1'
-            rule pattern: 'java.awt.**',
-                    result: 'org.atalk.android.util.java.awt.@1'
-            rule pattern: 'org.jitsi.service.**',
-                    result: 'org.atalk.service.@1'
         }
 
         jarjar2(jarfile: 'libs/systray-service.jar') {
@@ -354,9 +331,3 @@ tasks.withType(JavaCompile) {
 // will clean /libs/armeabi/*.so
 clean.dependsOn 'ndkClean'
 build.dependsOn 'updateVersionFile'
-
-// not require in android studio - can be removed
-task run(type: Exec, dependsOn: 'installDebug') {
-    // windows: adb + environment setup
-    commandLine 'cmd', '/c', 'adb', 'shell', 'am', 'start', '-n', 'org.atalk/.android.gui.LauncherActivity', '-D'
-}
