@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aTalk/aTalk.iml" filepath="$PROJECT_DIR$/aTalk/aTalk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/atalk-android.iml" filepath="$PROJECT_DIR$/atalk-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/dnsjava/dnsjava.iml" filepath="$PROJECT_DIR$/plugins/dnsjava/dnsjava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/easylocation/easylocation.iml" filepath="$PROJECT_DIR$/plugins/easylocation/easylocation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/ews-android-api/ews-android-api.iml" filepath="$PROJECT_DIR$/plugins/ews-android-api/ews-android-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugins/plugins.iml" filepath="$PROJECT_DIR$/plugins/plugins.iml" />
+    </modules>
+  </component>
+</project>

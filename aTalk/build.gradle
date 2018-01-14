@@ -221,19 +221,19 @@ task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
 
     // APP_PLATFORM=android-15 for aTalk minimum SDK platform support i.e. API-15
     // this setting if set takes priority over value set in jni/Application.mk
-    commandLine "$ndkDir/ndk-build",
-            '-C' + projectDir + '/jni',
-            '-j', Runtime.runtime.availableProcessors(),
-            'NDK_OUT=' + project.buildDir,
-            'NDK_LIBS_OUT=' + projectDir + '/libs/$(TARGET_ARCH_ABI)'
-            //'V=1'  // enable only for compilation debug only
+        commandLine "$ndkDir/ndk-build.cmd",
+                '-C' + projectDir + '/jni',
+                '-j', Runtime.runtime.availableProcessors(),
+                'NDK_OUT=' + project.buildDir,
+                'NDK_LIBS_OUT=' + projectDir + '/libs/$(TARGET_ARCH_ABI)'
+        //'V=1'  // enable only for compilation debug only
 }
 
 task ndkClean(type: Exec, description: 'Clean JNI object files') {
     def ndkDir = android.ndkDirectory
-    commandLine "$ndkDir/ndk-build",
-            '-C' + projectDir + '/jni',
-            'clean'
+        commandLine "$ndkDir/ndk-build.cmd",
+                '-C' + projectDir + '/jni',
+                'clean'
 }
 
 // renames packages to avoid conflict with android internal libraries
